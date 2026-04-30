@@ -673,84 +673,6 @@ body {
 }
 .print-btn:hover { background: var(--bgSubtle); color: var(--textPrimary); }
 
-/* ===== Code block (Prompt page) ===== */
-.code-block {
-  position: relative;
-  background: #1f1d1a;
-  color: #f5efe6;
-  border-radius: 12px;
-  padding: 22px 24px;
-  font-family: var(--font-mono);
-  font-size: 13.5px;
-  line-height: 1.65;
-  overflow-x: auto;
-  margin-top: 12px;
-}
-.code-block pre {
-  white-space: pre-wrap;
-  word-wrap: break-word;
-  padding-right: 70px;
-}
-.copy-btn {
-  position: absolute;
-  top: 14px;
-  right: 14px;
-  background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(255,255,255,0.14);
-  color: #f5efe6;
-  border-radius: 6px;
-  padding: 5px 12px;
-  font-family: inherit;
-  font-size: 12px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 150ms ease;
-}
-.copy-btn:hover { background: rgba(255,255,255,0.16); }
-.copy-btn.copied {
-  background: var(--accentGreen);
-  border-color: var(--accentGreen);
-  color: #fff;
-}
-.var-list {
-  display: grid;
-  grid-template-columns: 200px 1fr;
-  gap: 8px 18px;
-  margin-top: 16px;
-  font-size: 14px;
-}
-.var-list .v-key {
-  font-family: var(--font-mono);
-  font-size: 13px;
-  color: var(--accentIndigo);
-  font-weight: 700;
-}
-.var-list .v-val {
-  color: var(--textSecondary);
-  line-height: 1.5;
-}
-.example-card {
-  background: var(--bgSubtle);
-  border: 1px solid var(--borderSoft);
-  border-radius: 12px;
-  padding: 18px 20px;
-  margin-top: 14px;
-}
-.example-card .ex-label {
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--accentIndigo);
-  margin-bottom: 8px;
-}
-.example-card .ex-text {
-  font-family: var(--font-serif);
-  font-size: 15px;
-  color: var(--textPrimary);
-  line-height: 1.55;
-}
-
 /* ===== Workbook ===== */
 .wb-toolbar {
   display: flex;
@@ -930,10 +852,6 @@ body {
     <button class="tab" data-tab="workbook">
       <span class="tab-num">📓</span>
       <span class="tab-label">Workbook</span>
-    </button>
-    <button class="tab" data-tab="prompt">
-      <span class="tab-num">⌘</span>
-      <span class="tab-label">Prompt</span>
     </button>
   </nav>
 
@@ -1374,42 +1292,6 @@ function renderPlaybook() {
   `;
 }
 
-const ORIGINAL_PROMPT = `Build a plug-and-play 5-day sequence of scaffolded lessons for newcomer students with little to no English proficiency that aligns with and supports the core 7th grade California history and science curriculum, integrates language development through visuals, structured interaction, and differentiated supports, and simultaneously models simple, repeatable EL scaffolding strategies for teachers with limited experience.`;
-
-const TEMPLATE_PROMPT = `Build a plug-and-play [DAYS]-day sequence of scaffolded lessons for [LEARNER PROFILE] that aligns with and supports the core [GRADE] [SUBJECT] curriculum, integrates language development through visuals, structured interaction, and differentiated supports, and simultaneously models simple, repeatable EL scaffolding strategies for teachers with limited experience.
-
-Constraints:
-- Each day uses the same four-move flow: Preview, Show, Try, Say.
-- Each day teaches 5 vocabulary words with picture support.
-- Each day includes a sentence frame, a materials list, and 3 differentiation tiers (Entry, Emerging, Developing).
-- Each day models one reusable EL scaffold for the teacher (with a "why it works" + "where to use it next" note).
-- The final day is a synthesis day that combines content from prior days into one student product.
-- End with a Strategy Playbook listing all scaffolds taught.
-
-Output format: a teacher-facing daily plan for each day, plus the playbook at the end.`;
-
-const PROMPT_VARS = [
-  { k: '[DAYS]', v: 'How many days. 5 is a good week. 3 is a tight intro. 10 covers two weeks.' },
-  { k: '[LEARNER PROFILE]', v: 'Who the lessons are for. e.g., "newcomer students with little to no English", "long-term ELs in their fourth year", "SLIFE students new to formal schooling", "general ed 9th graders with three EL students embedded".' },
-  { k: '[GRADE]', v: 'Grade level. e.g., "3rd grade", "7th grade", "high school".' },
-  { k: '[SUBJECT]', v: 'Subject area or content focus. e.g., "California history and science", "U.S. History", "biology", "algebra 1", "ELA: argumentative writing".' }
-];
-
-const PROMPT_EXAMPLES = [
-  {
-    label: '3rd grade newcomers · ELA + science',
-    text: 'Build a plug-and-play 5-day sequence of scaffolded lessons for newcomer 3rd graders with little to no English that aligns with and supports the core 3rd grade ELA and science curriculum, integrates language development through visuals, structured interaction, and differentiated supports, and simultaneously models simple, repeatable EL scaffolding strategies for teachers with limited experience.'
-  },
-  {
-    label: 'High school U.S. History · mixed-level EL classroom',
-    text: 'Build a plug-and-play 5-day sequence of scaffolded lessons for high school newcomers and emerging ELs in a U.S. History classroom that aligns with and supports the core 11th grade U.S. History curriculum, integrates language development through visuals, structured interaction, and differentiated supports, and simultaneously models simple, repeatable EL scaffolding strategies for teachers with limited experience.'
-  },
-  {
-    label: '6th grade math · 3 newcomers embedded',
-    text: 'Build a plug-and-play 3-day sequence of scaffolded lessons for three newcomer 6th graders embedded in a general education math classroom that aligns with and supports the core 6th grade ratios and proportions unit, integrates language development through visuals, structured interaction, and differentiated supports, and simultaneously models simple, repeatable EL scaffolding strategies for teachers with limited experience.'
-  }
-];
-
 const WB_DAYS = [
   { n: 1, title: 'Where in the World?', strategy: 'Realia & Labeled Visuals', subject: 'History',
     pre: 'Which student do I most want to see place a dot on the map today, and why?' },
@@ -1422,74 +1304,6 @@ const WB_DAYS = [
   { n: 5, title: 'Then, Now, and Me', strategy: 'Gradual Release', subject: 'Synthesis',
     pre: 'Which student is ready to use both frames in one product today? Which student is still in the I-do?' }
 ];
-
-function renderPrompt() {
-  return `
-    <section class="page active" id="page-prompt">
-      <div class="intro">
-        <p><strong>How this was built.</strong> One prompt to a language model. No prep, no template, no curriculum binder. The five days, twenty vocabulary words, sentence frames, differentiation tiers, and scaffold playbook came back in one pass.</p>
-        <p>Here is the exact prompt that built this app, plus a fill-in-the-blanks version teachers can adapt for any grade, subject, or language level.</p>
-      </div>
-
-      <div class="card">
-        <div class="card-label">The original prompt · what built this app</div>
-        <div class="code-block">
-          <button class="copy-btn" data-copy="prompt-original">Copy</button>
-          <pre id="prompt-original">${escapeHtml(ORIGINAL_PROMPT)}</pre>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-label">The fill-in template · for any grade or subject</div>
-        <div class="code-block">
-          <button class="copy-btn" data-copy="prompt-template">Copy</button>
-          <pre id="prompt-template">${escapeHtml(TEMPLATE_PROMPT)}</pre>
-        </div>
-        <div style="margin-top: 18px;">
-          <div class="card-label">Variables to swap</div>
-          <div class="var-list">
-            ${PROMPT_VARS.map(v => `
-              <div class="v-key">${escapeHtml(v.k)}</div>
-              <div class="v-val">${escapeHtml(v.v)}</div>
-            `).join('')}
-          </div>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-label">Three example prompts you can copy</div>
-        ${PROMPT_EXAMPLES.map((ex, i) => `
-          <div class="example-card">
-            <div class="ex-label">${escapeHtml(ex.label)}</div>
-            <div class="ex-text">${escapeHtml(ex.text)}</div>
-            <div style="margin-top: 10px;">
-              <button class="copy-btn" style="position: static; background: var(--textPrimary); color: #fff;" data-copy-text="${escapeHtml(ex.text)}">Copy</button>
-            </div>
-          </div>
-        `).join('')}
-      </div>
-
-      <div class="card">
-        <div class="card-label">What you get back</div>
-        <ul class="bullet-list" style="font-size: 15px;">
-          <li><strong>A daily plan</strong> for each day, with content goal, language goal, vocabulary, materials, the four-move flow, sentence frames, three differentiation tiers, an exit ticket, and a teacher coaching note.</li>
-          <li><strong>A strategy playbook</strong> at the end that names every scaffold the week practiced, with a why-it-works and where-else-to-use-it for each.</li>
-          <li><strong>A web app</strong> (this one), if the model can also generate code. Otherwise the same content as a printable doc.</li>
-        </ul>
-      </div>
-
-      <div class="card">
-        <div class="card-label">Tips for teachers and coaches</div>
-        <ul class="bullet-list" style="font-size: 15px;">
-          <li><strong>Be specific about the learner.</strong> "Newcomer 7th graders with little to no English" produces a different plan than "intermediate ELs in a sheltered class". Say which one.</li>
-          <li><strong>Name the curriculum.</strong> "7th grade California history and science" anchors the model to specific content. Vague subjects produce vague lessons.</li>
-          <li><strong>Treat the output as a draft.</strong> The vocabulary, frames, and tiers are starting points. Your kids, your room, your call.</li>
-          <li><strong>Keep the four-move structure.</strong> Preview, Show, Try, Say is the load-bearing wall. If you change everything else, keep the rhythm.</li>
-        </ul>
-      </div>
-    </section>
-  `;
-}
 
 function renderWorkbook() {
   const dayPages = WB_DAYS.map(d => `
@@ -1645,31 +1459,11 @@ function render(tab) {
   if (tab === 'overview') html = renderOverview();
   else if (tab === 'playbook') html = renderPlaybook();
   else if (tab === 'workbook') html = renderWorkbook();
-  else if (tab === 'prompt') html = renderPrompt();
   else {
     const day = DAYS.find(d => d.id === tab);
     if (day) html = renderDay(day);
   }
   main.innerHTML = html;
-
-  // Hook copy buttons (Prompt page)
-  main.querySelectorAll('.copy-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const targetId = btn.getAttribute('data-copy');
-      const directText = btn.getAttribute('data-copy-text');
-      const text = directText || (targetId ? document.getElementById(targetId).innerText : '');
-      if (!text) return;
-      navigator.clipboard.writeText(text).then(() => {
-        const original = btn.textContent;
-        btn.textContent = 'Copied';
-        btn.classList.add('copied');
-        setTimeout(() => {
-          btn.textContent = original;
-          btn.classList.remove('copied');
-        }, 1400);
-      });
-    });
-  });
 
   // Hook overview tile clicks
   main.querySelectorAll('[data-jump]').forEach(btn => {
