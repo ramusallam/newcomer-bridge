@@ -1,0 +1,1211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Newcomer Bridge · 5-Day Sequence</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Roboto+Mono:wght@400;700&family=Roboto+Serif:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bgMain: #F7F3EE;
+  --bgPanel: #FFFFFF;
+  --bgCard: #FFFFFF;
+  --bgSubtle: #FAFAF7;
+  --borderColor: #E5E7EB;
+  --borderSoft: #EFEAE3;
+  --textPrimary: #111111;
+  --textSecondary: #555555;
+  --textMuted: #9CA3AF;
+
+  --accentIndigo: #6366f1;
+  --accentBlue: #3b82f6;
+  --accentPurple: #a855f7;
+  --accentGreen: #22c55e;
+  --accentAmber: #f59e0b;
+  --accentRed: #ef4444;
+  --accentTeal: #14b8a6;
+
+  --day1: #6366f1;
+  --day2: #22c55e;
+  --day3: #3b82f6;
+  --day4: #a855f7;
+  --day5: #f59e0b;
+
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-serif: 'Roboto Serif', Georgia, Cambria, serif;
+  --font-mono: 'Roboto Mono', ui-monospace, monospace;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-sans);
+  background: var(--bgMain);
+  color: var(--textPrimary);
+  line-height: 1.55;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+}
+
+.shell {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 40px 32px 80px;
+}
+
+/* ===== Header ===== */
+.header {
+  margin-bottom: 28px;
+}
+.eyebrow {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--textMuted);
+  margin-bottom: 10px;
+}
+.title {
+  font-size: 38px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin-bottom: 8px;
+}
+.subtitle {
+  font-family: var(--font-serif);
+  font-size: 18px;
+  color: var(--textSecondary);
+  font-style: italic;
+  max-width: 720px;
+}
+
+/* ===== Tabs ===== */
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 32px 0 28px;
+  padding: 8px;
+  background: var(--bgPanel);
+  border: 1px solid var(--borderColor);
+  border-radius: 14px;
+}
+.tab {
+  flex: 1;
+  min-width: 96px;
+  padding: 12px 14px;
+  background: transparent;
+  border: none;
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--textSecondary);
+  cursor: pointer;
+  transition: all 150ms ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+.tab:hover {
+  background: var(--bgSubtle);
+  color: var(--textPrimary);
+}
+.tab .tab-num {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--textMuted);
+  text-transform: uppercase;
+}
+.tab .tab-label {
+  font-size: 14px;
+}
+.tab.active {
+  background: var(--textPrimary);
+  color: #fff;
+}
+.tab.active .tab-num {
+  color: rgba(255,255,255,0.6);
+}
+.tab .dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  display: inline-block;
+  margin-right: 6px;
+  vertical-align: middle;
+}
+
+/* ===== Page ===== */
+.page { display: none; animation: fadeIn 320ms ease both; }
+.page.active { display: block; }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== Card primitive ===== */
+.card {
+  background: var(--bgCard);
+  border: 1px solid var(--borderColor);
+  border-radius: 14px;
+  padding: 24px;
+}
+.card + .card { margin-top: 16px; }
+.card-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--textMuted);
+  margin-bottom: 12px;
+}
+.card-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+/* ===== Day header ===== */
+.day-stripe {
+  height: 6px;
+  border-radius: 4px;
+  margin-bottom: 22px;
+}
+.day-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+.day-num {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--textMuted);
+}
+.subject-pill {
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: var(--bgSubtle);
+  border: 1px solid var(--borderColor);
+  color: var(--textSecondary);
+}
+.day-title {
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  margin-bottom: 8px;
+}
+.day-subtitle {
+  font-family: var(--font-serif);
+  font-size: 17px;
+  color: var(--textSecondary);
+  font-style: italic;
+  margin-bottom: 28px;
+  max-width: 700px;
+}
+
+/* ===== Goals strip ===== */
+.goals {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-bottom: 18px;
+}
+.goal {
+  background: var(--bgPanel);
+  border: 1px solid var(--borderColor);
+  border-radius: 12px;
+  padding: 16px 18px;
+}
+.goal .goal-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--textMuted);
+  margin-bottom: 6px;
+}
+.goal .goal-text {
+  font-size: 15px;
+  color: var(--textPrimary);
+  line-height: 1.45;
+}
+
+/* ===== Two-column grid ===== */
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 18px;
+  margin-bottom: 18px;
+}
+
+/* Vocabulary list */
+.vocab-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.vocab-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  background: var(--bgSubtle);
+  border: 1px solid var(--borderSoft);
+  border-radius: 10px;
+}
+.vocab-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  background: #fff;
+  border: 1px solid var(--borderColor);
+}
+.vocab-word {
+  font-weight: 600;
+  font-size: 15px;
+}
+
+/* Materials list */
+.bullet-list { list-style: none; }
+.bullet-list li {
+  position: relative;
+  padding-left: 18px;
+  margin-bottom: 8px;
+  font-size: 15px;
+  color: var(--textPrimary);
+  line-height: 1.45;
+}
+.bullet-list li::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 9px;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--textMuted);
+}
+
+/* ===== Lesson flow ===== */
+.flow {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.step {
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  gap: 14px;
+  padding: 14px 16px;
+  background: var(--bgSubtle);
+  border: 1px solid var(--borderSoft);
+  border-radius: 12px;
+  align-items: start;
+}
+.step-num {
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+  background: #fff;
+  border: 1px solid var(--borderColor);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+}
+.step-num .step-n {
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: var(--textMuted);
+  text-transform: uppercase;
+}
+.step-num .step-icon {
+  font-size: 22px;
+  line-height: 1;
+}
+.step-body .step-title {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.step-body .step-desc {
+  font-size: 14.5px;
+  color: var(--textPrimary);
+  line-height: 1.5;
+}
+.step-body .step-time {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--textMuted);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-top: 6px;
+  display: inline-block;
+}
+
+/* ===== Frame box (sentence frame) ===== */
+.frame-box {
+  background: #fdf1c6;
+  border: 1px solid #f0d77a;
+  border-radius: 12px;
+  padding: 16px 18px;
+  margin-top: 14px;
+}
+.frame-box .frame-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #7a3a00;
+  margin-bottom: 6px;
+}
+.frame-box .frame-text {
+  font-family: var(--font-serif);
+  font-size: 17px;
+  color: #2a1e08;
+  line-height: 1.5;
+}
+.frame-box .frame-text + .frame-text { margin-top: 4px; }
+
+/* ===== Differentiation ===== */
+.tiers {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 18px;
+}
+.tier {
+  background: var(--bgPanel);
+  border: 1px solid var(--borderColor);
+  border-radius: 12px;
+  padding: 16px;
+}
+.tier .tier-name {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 999px;
+}
+.tier.entry .tier-name { background: #fee2e2; color: #991b1b; }
+.tier.emerging .tier-name { background: #fef3c7; color: #92400e; }
+.tier.developing .tier-name { background: #d1fae5; color: #065f46; }
+.tier .tier-text {
+  font-size: 14.5px;
+  color: var(--textPrimary);
+  line-height: 1.5;
+}
+
+/* ===== Teacher coaching callout ===== */
+.coach {
+  background: linear-gradient(180deg, #eef2ff 0%, #e0e7ff 100%);
+  border: 1px solid #c7d2fe;
+  border-radius: 14px;
+  padding: 22px 24px;
+  margin-bottom: 18px;
+}
+.coach-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #3730a3;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.coach-label::before {
+  content: "★";
+  font-size: 14px;
+}
+.coach-strategy {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: #1e1b4b;
+  margin-bottom: 10px;
+}
+.coach-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 12px;
+}
+.coach-row .row-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #4338ca;
+  margin-bottom: 4px;
+}
+.coach-row .row-text {
+  font-size: 14.5px;
+  color: #1e1b4b;
+  line-height: 1.5;
+}
+
+/* ===== Exit ticket ===== */
+.exit {
+  background: var(--bgPanel);
+  border: 1px dashed var(--textMuted);
+  border-radius: 12px;
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 15px;
+}
+.exit-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--textMuted);
+  white-space: nowrap;
+}
+.exit-text { color: var(--textPrimary); }
+
+/* ===== Overview page ===== */
+.intro {
+  background: var(--bgPanel);
+  border: 1px solid var(--borderColor);
+  border-radius: 14px;
+  padding: 28px 30px;
+  margin-bottom: 24px;
+}
+.intro p {
+  font-family: var(--font-serif);
+  font-size: 17px;
+  color: var(--textPrimary);
+  line-height: 1.6;
+  max-width: 760px;
+}
+.intro p + p { margin-top: 12px; }
+
+.overview-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-bottom: 24px;
+}
+.day-tile {
+  background: var(--bgPanel);
+  border: 1px solid var(--borderColor);
+  border-radius: 14px;
+  padding: 22px 24px;
+  cursor: pointer;
+  transition: all 200ms ease;
+  text-align: left;
+  font-family: inherit;
+  position: relative;
+  overflow: hidden;
+}
+.day-tile:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+}
+.day-tile .tile-stripe {
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 5px;
+}
+.day-tile .tile-meta {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 8px;
+  align-items: center;
+}
+.day-tile .tile-num {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--textMuted);
+}
+.day-tile .tile-pill {
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: var(--bgSubtle);
+  border: 1px solid var(--borderColor);
+  color: var(--textSecondary);
+}
+.day-tile .tile-title {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin-bottom: 6px;
+}
+.day-tile .tile-strategy {
+  font-size: 13px;
+  color: var(--textSecondary);
+  font-style: italic;
+}
+
+.frame-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-top: 18px;
+}
+.frame-step {
+  background: #fff;
+  border: 1px solid var(--borderColor);
+  border-radius: 12px;
+  padding: 16px;
+  text-align: center;
+}
+.frame-step .fs-icon {
+  font-size: 28px;
+  margin-bottom: 6px;
+  display: block;
+}
+.frame-step .fs-name {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--textPrimary);
+  margin-bottom: 4px;
+}
+.frame-step .fs-desc {
+  font-size: 13px;
+  color: var(--textSecondary);
+  line-height: 1.4;
+}
+
+/* ===== Playbook ===== */
+.playbook-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.play {
+  background: var(--bgPanel);
+  border: 1px solid var(--borderColor);
+  border-radius: 14px;
+  padding: 22px 24px;
+  display: grid;
+  grid-template-columns: 60px 1fr;
+  gap: 18px;
+  align-items: start;
+}
+.play-num {
+  width: 60px;
+  height: 60px;
+  border-radius: 14px;
+  background: var(--accentIndigo);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  font-weight: 800;
+}
+.play-name {
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin-bottom: 6px;
+}
+.play-tag {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--textMuted);
+  margin-bottom: 10px;
+  letter-spacing: 0.04em;
+}
+.play-why {
+  font-size: 14.5px;
+  color: var(--textPrimary);
+  line-height: 1.55;
+  margin-bottom: 8px;
+}
+.play-when {
+  font-size: 13.5px;
+  color: var(--textSecondary);
+  line-height: 1.5;
+  font-style: italic;
+}
+
+/* ===== Footer hint ===== */
+.print-hint {
+  margin-top: 28px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--textMuted);
+}
+.print-btn {
+  background: var(--bgPanel);
+  border: 1px solid var(--borderColor);
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--textSecondary);
+  cursor: pointer;
+  margin-left: 8px;
+}
+.print-btn:hover { background: var(--bgSubtle); color: var(--textPrimary); }
+
+/* ===== Responsive ===== */
+@media (max-width: 760px) {
+  .shell { padding: 24px 16px 60px; }
+  .title { font-size: 28px; }
+  .day-title { font-size: 24px; }
+  .grid-2 { grid-template-columns: 1fr; }
+  .goals { grid-template-columns: 1fr; }
+  .tiers { grid-template-columns: 1fr; }
+  .coach-row { grid-template-columns: 1fr; }
+  .overview-grid { grid-template-columns: 1fr; }
+  .frame-row { grid-template-columns: repeat(2, 1fr); }
+  .tabs .tab .tab-num { font-size: 10px; }
+}
+
+/* ===== Print ===== */
+@media print {
+  body { background: #fff; }
+  .tabs, .print-hint { display: none !important; }
+  .page { display: block !important; page-break-after: always; }
+  .shell { max-width: 100%; padding: 16px; }
+  .card, .day-tile, .play, .coach { break-inside: avoid; }
+}
+</style>
+</head>
+<body>
+<div class="shell">
+
+  <!-- ===== Header ===== -->
+  <div class="header">
+    <div class="eyebrow">Newcomer Bridge · 7th Grade</div>
+    <h1 class="title">Five Days for Newcomers.</h1>
+    <p class="subtitle">A plug-and-play sequence that bridges newcomer English learners into 7th grade California history and science, while quietly modeling five reusable scaffolds for the teacher.</p>
+  </div>
+
+  <!-- ===== Tabs ===== -->
+  <nav class="tabs" id="tabs">
+    <button class="tab active" data-tab="overview">
+      <span class="tab-num">Start</span>
+      <span class="tab-label">Overview</span>
+    </button>
+    <button class="tab" data-tab="day1">
+      <span class="tab-num"><span class="dot" style="background: var(--day1)"></span>Day 1</span>
+      <span class="tab-label">History</span>
+    </button>
+    <button class="tab" data-tab="day2">
+      <span class="tab-num"><span class="dot" style="background: var(--day2)"></span>Day 2</span>
+      <span class="tab-label">Science</span>
+    </button>
+    <button class="tab" data-tab="day3">
+      <span class="tab-num"><span class="dot" style="background: var(--day3)"></span>Day 3</span>
+      <span class="tab-label">History</span>
+    </button>
+    <button class="tab" data-tab="day4">
+      <span class="tab-num"><span class="dot" style="background: var(--day4)"></span>Day 4</span>
+      <span class="tab-label">Science</span>
+    </button>
+    <button class="tab" data-tab="day5">
+      <span class="tab-num"><span class="dot" style="background: var(--day5)"></span>Day 5</span>
+      <span class="tab-label">Synthesis</span>
+    </button>
+    <button class="tab" data-tab="playbook">
+      <span class="tab-num">★</span>
+      <span class="tab-label">Playbook</span>
+    </button>
+  </nav>
+
+  <!-- ===== Pages render here ===== -->
+  <main id="main"></main>
+
+  <div class="print-hint">
+    Each day prints as one page.
+    <button class="print-btn" onclick="window.print()">Print all 5 days</button>
+  </div>
+</div>
+
+<script>
+const DAYS = [
+  {
+    id: 'day1',
+    n: 1,
+    color: 'var(--day1)',
+    subject: 'History',
+    title: 'Where in the World?',
+    arc: 'Locate continents, oceans, and your home country on a world map.',
+    contentGoal: 'Identify the seven continents and locate your home country on a world map.',
+    languageGoal: 'Say "I am from ___. ___ is in ___." in a complete sentence.',
+    vocab: [
+      { w: 'world', i: '🌍' },
+      { w: 'country', i: '🚩' },
+      { w: 'continent', i: '🗺️' },
+      { w: 'ocean', i: '🌊' },
+      { w: 'home', i: '🏠' }
+    ],
+    materials: [
+      'Large world map (poster or projected)',
+      'Sticky dots or push pins',
+      'Index cards with each student\'s name',
+      'Photos from students\' home countries (optional but powerful)'
+    ],
+    flow: [
+      { icon: '👀', name: 'Preview', time: '5 min', desc: 'Show five picture cards on the board: world, country, continent, ocean, home. Say each word three times. Students repeat as a class. Point to the picture, say the word, then point to a student and have them say it back.' },
+      { icon: '🗺️', name: 'Show', time: '5 min', desc: 'Stand at the world map. Point to your own country. Say slowly: "I am from ___. ___ is in ___." Repeat twice with a different sentence rhythm so students can hear the pattern.' },
+      { icon: '🤝', name: 'Try', time: '15 min', desc: 'One at a time, students walk to the map and place a sticky dot on their home country. Class watches and softly choral-says the country name as it is placed.' },
+      { icon: '🗣️', name: 'Say', time: '15 min', desc: 'Students return to seats. Each student finishes the sentence frame on an index card. They read it aloud to a partner. Partner gives a thumbs-up.' }
+    ],
+    frames: [
+      'I am from ____.',
+      '____ is in ____ (continent).'
+    ],
+    tiers: {
+      entry: 'Walk to the map and point. No speaking required.',
+      emerging: 'Complete the frame with one or two words. Use the picture cards to find the words.',
+      developing: 'Add a second sentence: "It is ___ there." (hot, cold, big, near the ocean...)'
+    },
+    exit: 'Draw your country\'s flag on the back of the index card.',
+    strategy: {
+      name: 'Realia & Labeled Visuals',
+      tag: 'Anchor every new noun in something they can see or touch.',
+      why: 'Newcomers cannot map a word onto an idea they do not have language for yet. A picture, a real object, or a place on a map gives them the idea first. The word arrives second and sticks.',
+      when: 'Every new noun this week gets a picture before the word. Try it next time with any vocabulary list, in any subject. If you can hold it, point to it, or show it on a screen, do that before you say the word.'
+    }
+  },
+
+  {
+    id: 'day2',
+    n: 2,
+    color: 'var(--day2)',
+    subject: 'Science',
+    title: 'Living or Not Living?',
+    arc: 'Sort the world into two big groups. The first move of every life science unit.',
+    contentGoal: 'Sort organisms and objects as living or nonliving (NGSS MS-LS1.A foundation).',
+    languageGoal: 'Say "A ___ is living" or "A ___ is not living" with the correct noun.',
+    vocab: [
+      { w: 'living', i: '🌱' },
+      { w: 'not living', i: '🪨' },
+      { w: 'plant', i: '🌳' },
+      { w: 'animal', i: '🐶' },
+      { w: 'rock', i: '🪨' }
+    ],
+    materials: [
+      '15 to 20 picture cards: tree, dog, rock, water, fish, chair, baby, flower, table, bird, sun, mushroom, pencil, frog, river',
+      'Two hoops or labeled bins on the floor: LIVING / NOT LIVING',
+      'Tape (so students can post their card)'
+    ],
+    flow: [
+      { icon: '👀', name: 'Preview', time: '5 min', desc: 'Hold up each vocabulary card. Say the word. Students respond with a body signal: arms raised for living, arms crossed for not living. Repeat the five words twice.' },
+      { icon: '🧪', name: 'Show', time: '5 min', desc: 'Pick three cards. Demo the sort while narrating: "A tree is living. A tree grows." Place it in the LIVING bin. "A rock is not living. A rock does not grow." Place it in NOT LIVING.' },
+      { icon: '🤝', name: 'Try', time: '15 min', desc: 'Students take turns. Pull a card, walk to a bin, and place it. The class chorally says the sentence: "A ___ is living." Move fast. Cheer mistakes; resort together.' },
+      { icon: '🗣️', name: 'Say', time: '10 min', desc: 'Pairs draw two cards each from a small pile. Each partner reads both sentences aloud using the frame. Then trade pairs and do it again with new cards.' }
+    ],
+    frames: [
+      'A ____ is living.',
+      'A ____ is not living.'
+    ],
+    tiers: {
+      entry: 'Sort the cards into bins. Use body signals only. Speaking is optional.',
+      emerging: 'Choral-read with the class. Then read your own card aloud.',
+      developing: 'Add the reason: "A ___ is living because it ___ (grows, eats, breathes)."'
+    },
+    exit: 'On a sticky note, draw one living thing and one not-living thing from your room.',
+    strategy: {
+      name: 'Sorting + Choral Response',
+      tag: 'Hands move first. Voices join in. Words come last.',
+      why: 'Sorting is comprehensible without language. Choral response lets a quiet student rehearse a sentence with twenty other voices for cover. By the time you ask them to speak alone, they have already said the sentence eight times in their head.',
+      when: 'Any either-or science concept lives here: solid versus liquid, plant versus animal, soft versus hard, push versus pull. Make it a sort. Add the frame. Read together.'
+    }
+  },
+
+  {
+    id: 'day3',
+    n: 3,
+    color: 'var(--day3)',
+    subject: 'History',
+    title: 'Long Ago and Today',
+    arc: 'Compare life in the medieval world with life today. The opening move of every CA 7th grade history unit.',
+    contentGoal: 'Identify changes in tools, work, and daily life from long ago to today.',
+    languageGoal: 'Say "Long ago, people ___. Today, we ___." using past and present.',
+    vocab: [
+      { w: 'long ago', i: '⏳' },
+      { w: 'today', i: '📆' },
+      { w: 'change', i: '🔄' },
+      { w: 'people', i: '👥' },
+      { w: 'life', i: '✨' }
+    ],
+    materials: [
+      'Six paired image cards: candle/light bulb, horse/car, scroll/laptop, wooden plow/tractor, well/faucet, letter/text message',
+      'T-chart on big paper or board: LONG AGO | TODAY',
+      'Sentence frame strips, taped above the T-chart'
+    ],
+    flow: [
+      { icon: '👀', name: 'Preview', time: '5 min', desc: 'Show the five vocabulary cards. Read each one. Students repeat. Then act out "long ago" by stroking an imaginary beard, and "today" by tapping a wristwatch. Use the gestures whenever you say the words.' },
+      { icon: '⚖️', name: 'Show', time: '8 min', desc: 'Place the candle/light-bulb pair on the T-chart. Read the frame slowly: "Long ago, people used a candle. Today, we use a light bulb." Repeat with a second pair. Pause and let students predict where the next image goes.' },
+      { icon: '🤝', name: 'Try', time: '17 min', desc: 'In pairs, students sort the remaining four pairs onto the T-chart. They whisper-read the frame to each other before placing each card.' },
+      { icon: '🗣️', name: 'Say', time: '10 min', desc: 'Each pair shares one comparison aloud to the class. The class repeats it back chorally.' }
+    ],
+    frames: [
+      'Long ago, people ____.',
+      'Today, we ____.'
+    ],
+    tiers: {
+      entry: 'Match the image pairs only. No frame required. Point to the side of the T-chart where each picture goes.',
+      emerging: 'Complete the frame with picture support. Read with your partner.',
+      developing: 'Write the two sentences in your notebook. Add: "This is a change because ___."'
+    },
+    exit: 'Pick one pair. Draw both sides on a folded paper. Label each side LONG AGO or TODAY.',
+    strategy: {
+      name: 'Sentence Frames + T-Chart',
+      tag: 'A graphic organizer is a thinking map that holds the language for them.',
+      why: 'When the structure of the sentence and the structure of the comparison are both already on the board, students can spend their attention on the content. The chart frees up the working memory the language was using.',
+      when: 'Every compare-contrast lesson lives on a T-chart with a sentence frame above it. North versus South. Cell versus organ. Then versus now. Same move.'
+    }
+  },
+
+  {
+    id: 'day4',
+    n: 4,
+    color: 'var(--day4)',
+    subject: 'Science',
+    title: 'My Body Works',
+    arc: 'Name the major body parts and what each one does. Sets up structure-and-function for the rest of life science.',
+    contentGoal: 'Identify the heart, lungs, and brain on a body diagram and describe what each one does (NGSS MS-LS1.A).',
+    languageGoal: 'Say "My ___ helps me ___." using a body part and an action verb.',
+    vocab: [
+      { w: 'heart', i: '❤️' },
+      { w: 'lungs', i: '🫁' },
+      { w: 'brain', i: '🧠' },
+      { w: 'breathe', i: '💨' },
+      { w: 'beat', i: '💓' }
+    ],
+    materials: [
+      'Body outline diagram, one per student',
+      'Three labels per student: HEART, LUNGS, BRAIN',
+      'Pencils or thin markers'
+    ],
+    flow: [
+      { icon: '👀', name: 'Preview', time: '7 min', desc: 'Say "heart" and place a hand on your chest. Students copy. Say "lungs" and take a deep breath in and out. Students copy. Say "brain" and tap your head. Students copy. Repeat the cycle three times, faster each time.' },
+      { icon: '🧠', name: 'Show', time: '5 min', desc: 'Stand at the board. Label HEART, LUNGS, BRAIN on a body outline. As you label each, narrate: "My heart beats. My lungs breathe. My brain thinks."' },
+      { icon: '🤝', name: 'Try', time: '15 min', desc: 'Students label their own body diagrams. After each label, they stand up and act out the body part: hand on chest for heart, deep breath for lungs, thinking pose for brain.' },
+      { icon: '🗣️', name: 'Say', time: '8 min', desc: 'Around the room, each student says one frame aloud while doing the action. The class echoes it with the same gesture.' }
+    ],
+    frames: [
+      'My ____ helps me ____.',
+      '(heart / beat) · (lungs / breathe) · (brain / think)'
+    ],
+    tiers: {
+      entry: 'Do the gesture only. Place the labels on the diagram with help.',
+      emerging: 'Name the body part as you point. Use the frame with one word.',
+      developing: 'Add a second sentence: "Without my ___, I cannot ___."'
+    },
+    exit: 'On a half-sheet, draw yourself. Label three body parts. Add an arrow and a verb to one of them.',
+    strategy: {
+      name: 'TPR · Total Physical Response',
+      tag: 'Move the body. Lock in the word.',
+      why: 'A word attached to a gesture lives in the body, not just the brain. Students who cannot retrieve the word in writing will retrieve it in their hands. TPR also gives entry-level students a way to participate fully without speaking yet.',
+      when: 'Every science verb (push, pull, melt, freeze, grow, flow, mix, separate) gets a gesture. Teach the gesture first. The word will arrive on its own.'
+    }
+  },
+
+  {
+    id: 'day5',
+    n: 5,
+    color: 'var(--day5)',
+    subject: 'Synthesis',
+    title: 'Then, Now, and Me',
+    arc: 'Bring history and science together. Each student makes a small poster connecting people in the past to the body today.',
+    contentGoal: 'Connect change over time (history) with how the body works (science) in a short multi-modal product.',
+    languageGoal: 'Use both sentence frames from Days 3 and 4 in one short paragraph or labeled poster.',
+    vocab: [
+      { w: 'all 20 words', i: '📚' },
+      { w: 'from Days 1 to 4', i: '🔁' },
+      { w: 'word wall', i: '🧱' },
+      { w: 'poster', i: '📄' },
+      { w: 'share', i: '🫱🏽‍🫲🏽' }
+    ],
+    materials: [
+      'Large paper, one per student',
+      'Markers and colored pencils',
+      'Picture-word bank from Days 1 to 4 (laminated and reusable)',
+      'Sentence frame strips on every table'
+    ],
+    flow: [
+      { icon: '👀', name: 'Preview', time: '5 min', desc: 'Word wall review. Point to each word from Days 1 to 4. Students choral-name. Move fast. Praise the volume of the room.' },
+      { icon: '📄', name: 'I do · Show', time: '7 min', desc: 'Show your finished sample poster. Read it aloud while pointing: "Long ago, people did not know about the heart. Today, doctors know how the heart beats." Walk through how you used the word bank to find each word.' },
+      { icon: '✍️', name: 'We do · Try', time: '10 min', desc: 'Co-create a second poster on chart paper as a class. You write; students contribute words from the bank. Choose one body part and one tool from long ago.' },
+      { icon: '🗣️', name: 'You do · Say', time: '18 min', desc: 'Students make their own poster using the frame strips and the word bank. They share with one partner, then one new partner, before turning it in.' }
+    ],
+    frames: [
+      'Long ago, people did not know about ____.',
+      'Today, we know that ____.'
+    ],
+    tiers: {
+      entry: 'Copy the model poster with your own drawing. Use the picture-word bank to add labels.',
+      emerging: 'Use one frame. Add three labeled drawings. Read your poster to one partner.',
+      developing: 'Use both frames. Write 2 to 3 sentences. Read your poster to two partners.'
+    },
+    exit: 'Share your poster with one classmate. Trade one piece of feedback: "I like ___."',
+    strategy: {
+      name: 'Gradual Release · I do, We do, You do',
+      tag: 'Show the whole. Build one together. Then they make their own.',
+      why: 'Newcomers need to see the finished product before they can build it. Co-construction lowers the cliff between the model and their first attempt. By the time they work alone, they have already heard, seen, and built the thing twice.',
+      when: 'Any output task, in any subject, gets the I-do / We-do / You-do sequence. Lab reports, summaries, drawings, oral presentations. Same three steps every time.'
+    }
+  }
+];
+
+const PLAYBOOK = DAYS.map(d => ({
+  n: d.n,
+  name: d.strategy.name,
+  tag: d.strategy.tag,
+  why: d.strategy.why,
+  when: d.strategy.when,
+  color: d.color
+}));
+
+const main = document.getElementById('main');
+const tabs = document.querySelectorAll('.tab');
+
+function escapeHtml(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function renderOverview() {
+  return `
+    <section class="page active" id="page-overview">
+      <div class="intro">
+        <p><strong>Who this is for.</strong> Newcomer 7th graders with little to no English, sitting alongside the core history and science curriculum. Five 50-minute lessons, plug-and-play, no prep beyond gathering pictures and a few props.</p>
+        <p><strong>Two students at the same time.</strong> Every day teaches your students content (geography, life, time, body, synthesis) and quietly teaches you, the teacher, one reusable EL scaffold. By Friday, your students have a foothold in the curriculum and you have five moves you can keep using forever.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-label">The lesson frame · same every day</div>
+        <div class="frame-row">
+          <div class="frame-step"><span class="fs-icon">👀</span><div class="fs-name">Preview</div><div class="fs-desc">Picture the words.</div></div>
+          <div class="frame-step"><span class="fs-icon">🗺️</span><div class="fs-name">Show</div><div class="fs-desc">See the model.</div></div>
+          <div class="frame-step"><span class="fs-icon">🤝</span><div class="fs-name">Try</div><div class="fs-desc">Do it together.</div></div>
+          <div class="frame-step"><span class="fs-icon">🗣️</span><div class="fs-name">Say</div><div class="fs-desc">Use the frame.</div></div>
+        </div>
+      </div>
+
+      <div style="height: 24px;"></div>
+
+      <div class="overview-grid">
+        ${DAYS.map(d => `
+          <button class="day-tile" data-jump="${d.id}">
+            <div class="tile-stripe" style="background: ${d.color}"></div>
+            <div class="tile-meta">
+              <span class="tile-num">Day ${d.n}</span>
+              <span class="tile-pill">${d.subject}</span>
+            </div>
+            <div class="tile-title">${escapeHtml(d.title)}</div>
+            <div class="tile-strategy">Modeling: ${escapeHtml(d.strategy.name)}</div>
+          </button>
+        `).join('')}
+      </div>
+
+      <div class="card">
+        <div class="card-label">How to use this</div>
+        <ul class="bullet-list" style="font-size: 15px;">
+          <li>Open the day. Print it if you want a paper plan.</li>
+          <li>Gather the materials in the morning. Most days need pictures and one prop.</li>
+          <li>Run the four steps in order. Don't skip Preview. The vocabulary load on Show, Try, and Say is calibrated to it.</li>
+          <li>Pick the differentiation tier per student, not for the whole class.</li>
+          <li>Read the Teacher Move callout once before class. That is the scaffold you are practicing today.</li>
+        </ul>
+      </div>
+    </section>
+  `;
+}
+
+function renderDay(d) {
+  return `
+    <section class="page active" id="page-${d.id}">
+      <div class="day-stripe" style="background: ${d.color}"></div>
+      <div class="day-meta">
+        <span class="day-num">Day ${d.n}</span>
+        <span class="subject-pill">${d.subject}</span>
+      </div>
+      <h2 class="day-title">${escapeHtml(d.title)}</h2>
+      <p class="day-subtitle">${escapeHtml(d.arc)}</p>
+
+      <div class="goals">
+        <div class="goal">
+          <div class="goal-label">Content goal</div>
+          <div class="goal-text">${escapeHtml(d.contentGoal)}</div>
+        </div>
+        <div class="goal">
+          <div class="goal-label">Language goal</div>
+          <div class="goal-text">${escapeHtml(d.languageGoal)}</div>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div>
+          <div class="card">
+            <div class="card-label">Vocabulary · 5 words</div>
+            <div class="vocab-list">
+              ${d.vocab.map(v => `
+                <div class="vocab-item">
+                  <div class="vocab-icon">${v.i}</div>
+                  <div class="vocab-word">${escapeHtml(v.w)}</div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-label">Materials</div>
+            <ul class="bullet-list">
+              ${d.materials.map(m => `<li>${escapeHtml(m)}</li>`).join('')}
+            </ul>
+          </div>
+        </div>
+
+        <div>
+          <div class="card">
+            <div class="card-label">Lesson flow · 50 min</div>
+            <div class="flow">
+              ${d.flow.map((s, i) => `
+                <div class="step">
+                  <div class="step-num">
+                    <div class="step-icon">${s.icon}</div>
+                    <div class="step-n">${i+1}</div>
+                  </div>
+                  <div class="step-body">
+                    <div class="step-title">${escapeHtml(s.name)}</div>
+                    <div class="step-desc">${escapeHtml(s.desc)}</div>
+                    <span class="step-time">${escapeHtml(s.time)}</span>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+            <div class="frame-box">
+              <div class="frame-label">Sentence frames</div>
+              ${d.frames.map(f => `<div class="frame-text">${escapeHtml(f)}</div>`).join('')}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-label">Differentiation · pick a tier per student</div>
+        <div class="tiers">
+          <div class="tier entry">
+            <div class="tier-name">Entry</div>
+            <div class="tier-text">${escapeHtml(d.tiers.entry)}</div>
+          </div>
+          <div class="tier emerging">
+            <div class="tier-name">Emerging</div>
+            <div class="tier-text">${escapeHtml(d.tiers.emerging)}</div>
+          </div>
+          <div class="tier developing">
+            <div class="tier-name">Developing</div>
+            <div class="tier-text">${escapeHtml(d.tiers.developing)}</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="coach">
+        <div class="coach-label">Teacher Move · the scaffold you are practicing today</div>
+        <div class="coach-strategy">${escapeHtml(d.strategy.name)}</div>
+        <div style="font-size: 14px; color: #4338ca; font-style: italic;">${escapeHtml(d.strategy.tag)}</div>
+        <div class="coach-row">
+          <div>
+            <div class="row-label">Why this works</div>
+            <div class="row-text">${escapeHtml(d.strategy.why)}</div>
+          </div>
+          <div>
+            <div class="row-label">Try it next time</div>
+            <div class="row-text">${escapeHtml(d.strategy.when)}</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="exit">
+        <span class="exit-label">Exit ticket</span>
+        <span class="exit-text">${escapeHtml(d.exit)}</span>
+      </div>
+    </section>
+  `;
+}
+
+function renderPlaybook() {
+  return `
+    <section class="page active" id="page-playbook">
+      <div class="intro">
+        <p><strong>The five-move playbook.</strong> One scaffold per day, in the order students need them. Practice them this week with these lessons. Then keep using them with whatever curriculum comes next.</p>
+      </div>
+      <div class="playbook-grid">
+        ${PLAYBOOK.map(p => `
+          <div class="play">
+            <div class="play-num" style="background: ${p.color}">${p.n}</div>
+            <div>
+              <div class="play-name">${escapeHtml(p.name)}</div>
+              <div class="play-tag">${escapeHtml(p.tag)}</div>
+              <div class="play-why"><strong>Why it works.</strong> ${escapeHtml(p.why)}</div>
+              <div class="play-when"><strong>When to use it.</strong> ${escapeHtml(p.when)}</div>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    </section>
+  `;
+}
+
+function render(tab) {
+  let html = '';
+  if (tab === 'overview') html = renderOverview();
+  else if (tab === 'playbook') html = renderPlaybook();
+  else {
+    const day = DAYS.find(d => d.id === tab);
+    if (day) html = renderDay(day);
+  }
+  main.innerHTML = html;
+
+  // Hook overview tile clicks
+  main.querySelectorAll('[data-jump]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = btn.getAttribute('data-jump');
+      activate(target);
+    });
+  });
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function activate(tab) {
+  tabs.forEach(t => t.classList.toggle('active', t.dataset.tab === tab));
+  render(tab);
+}
+
+tabs.forEach(t => t.addEventListener('click', () => activate(t.dataset.tab)));
+
+// Initial render
+render('overview');
+</script>
+</body>
+</html>
