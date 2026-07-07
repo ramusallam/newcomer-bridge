@@ -673,7 +673,7 @@ body {
 }
 .print-btn:hover { background: var(--bgSubtle); color: var(--textPrimary); }
 
-/* ===== Workbook ===== */
+/* ===== Notebook ===== */
 .wb-toolbar {
   display: flex;
   gap: 12px;
@@ -849,9 +849,9 @@ body {
       <span class="tab-num">★</span>
       <span class="tab-label">Playbook</span>
     </button>
-    <button class="tab" data-tab="workbook">
+    <button class="tab" data-tab="notebook">
       <span class="tab-num">📓</span>
-      <span class="tab-label">Workbook</span>
+      <span class="tab-label">Notebook</span>
     </button>
   </nav>
 
@@ -1305,7 +1305,7 @@ const WB_DAYS = [
     pre: 'Which student is ready to use both frames in one product today? Which student is still in the I-do?' }
 ];
 
-function renderWorkbook() {
+function renderNotebook() {
   const dayPages = WB_DAYS.map(d => `
     <div class="wb-page">
       <div class="wb-page-header">
@@ -1438,11 +1438,11 @@ function renderWorkbook() {
   `;
 
   return `
-    <section class="page active" id="page-workbook">
+    <section class="page active" id="page-notebook">
       <div class="intro">
         <p><strong>The teacher's companion.</strong> Print this once at the start of the week. One page per day, plus a five-scaffold mastery tracker and a coaching observation form. Built for staff development: turn each day into a small, deliberate piece of practice.</p>
         <div class="wb-toolbar">
-          <button class="print-btn" onclick="window.print()">Print the full workbook</button>
+          <button class="print-btn" onclick="window.print()">Print the full notebook</button>
           <span style="font-size: 13px; color: var(--textMuted);">Each section prints on its own page.</span>
         </div>
       </div>
@@ -1458,7 +1458,7 @@ function render(tab) {
   let html = '';
   if (tab === 'overview') html = renderOverview();
   else if (tab === 'playbook') html = renderPlaybook();
-  else if (tab === 'workbook') html = renderWorkbook();
+  else if (tab === 'notebook') html = renderNotebook();
   else {
     const day = DAYS.find(d => d.id === tab);
     if (day) html = renderDay(day);
