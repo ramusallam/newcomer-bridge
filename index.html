@@ -4,36 +4,43 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Newcomer Bridge · 5-Day Sequence</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Roboto+Mono:wght@400;700&family=Roboto+Serif:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Roboto+Mono:wght@400;500;700&family=Roboto+Serif:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 :root {
   --bgMain: #F7F3EE;
   --bgPanel: #FFFFFF;
   --bgCard: #FFFFFF;
   --bgSubtle: #FAFAF7;
-  --borderColor: #E5E7EB;
-  --borderSoft: #EFEAE3;
-  --textPrimary: #111111;
-  --textSecondary: #555555;
-  --textMuted: #9CA3AF;
+  --borderColor: #E8E0D2;
+  --borderSoft: #F0EBE3;
+  --textPrimary: #1C1917;
+  --textSecondary: #57534E;
+  --textMuted: #7C6F5A;
+  --textFaint: #A0937B;
 
   --accentIndigo: #6366f1;
-  --accentBlue: #3b82f6;
+  --accentIndigoHover: #4f46e5;
+  --accentIndigo2: #818CF8;
+  --indigo-soft: rgba(99,102,241,0.09);
+  --indigo-line: rgba(99,102,241,0.30);
   --accentPurple: #a855f7;
-  --accentGreen: #22c55e;
+  --accentGreen: #10b981;
   --accentAmber: #f59e0b;
   --accentRed: #ef4444;
-  --accentTeal: #14b8a6;
 
   --day1: #6366f1;
-  --day2: #22c55e;
-  --day3: #3b82f6;
-  --day4: #a855f7;
-  --day5: #f59e0b;
+  --day2: #10b981;
+  --day3: #a855f7;
+  --day4: #f59e0b;
+  --day5: #4f46e5;
 
   --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
   --font-serif: 'Roboto Serif', Georgia, Cambria, serif;
   --font-mono: 'Roboto Mono', ui-monospace, monospace;
+
+  --sh-sm: 0 1px 2px rgba(17,17,17,0.05), 0 2px 6px rgba(17,17,17,0.08);
+  --sh-md: 0 4px 12px rgba(17,17,17,0.06), 0 2px 4px rgba(17,17,17,0.04);
+  --sh-lg: 0 16px 40px rgba(17,17,17,0.10), 0 4px 12px rgba(17,17,17,0.06);
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -50,34 +57,74 @@ body {
 .shell {
   max-width: 1080px;
   margin: 0 auto;
-  padding: 40px 32px 80px;
+  padding: 0 32px 80px;
 }
 
-/* ===== Header ===== */
-.header {
-  margin-bottom: 28px;
+/* ===== Hero ===== */
+.hero {
+  background: linear-gradient(150deg, #4F46E5 0%, #6366F1 100%);
+  color: #fff;
+  margin: 0 -32px 0;
+  padding: 56px 32px 96px;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: "";
+  position: absolute;
+  top: -50%; left: -50%;
+  width: 200%; height: 200%;
+  background: radial-gradient(circle, rgba(255,255,255,0.06) 1px, transparent 2px);
+  background-size: 40px 40px;
+  pointer-events: none;
+}
+.hero-inner {
+  position: relative;
+  max-width: 1016px;
+  margin: 0 auto;
 }
 .eyebrow {
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.14em;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.25em;
   text-transform: uppercase;
-  color: var(--textMuted);
+  color: var(--accentIndigo);
   margin-bottom: 10px;
 }
+.hero .eyebrow {
+  color: rgba(255,255,255,0.92);
+}
 .title {
-  font-size: 38px;
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  line-height: 1.1;
-  margin-bottom: 8px;
+  font-family: var(--font-serif);
+  font-size: 40px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  line-height: 1.08;
+  margin-bottom: 12px;
 }
 .subtitle {
   font-family: var(--font-serif);
   font-size: 18px;
-  color: var(--textSecondary);
-  font-style: italic;
+  color: rgba(255,255,255,0.94);
+  line-height: 1.5;
   max-width: 720px;
+}
+.hero-badges {
+  display: flex;
+  gap: 9px;
+  flex-wrap: wrap;
+  margin-top: 22px;
+}
+.hero-badges span {
+  background: rgba(255,255,255,0.18);
+  padding: 6px 14px;
+  border-radius: 9999px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
 
 /* ===== Tabs ===== */
@@ -85,11 +132,14 @@ body {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  margin: 32px 0 28px;
+  margin: -56px 0 28px;
+  position: relative;
+  z-index: 2;
   padding: 8px;
   background: var(--bgPanel);
   border: 1px solid var(--borderColor);
-  border-radius: 14px;
+  border-radius: 16px;
+  box-shadow: var(--sh-md);
 }
 .tab {
   flex: 1;
@@ -97,7 +147,7 @@ body {
   padding: 12px 14px;
   background: transparent;
   border: none;
-  border-radius: 10px;
+  border-radius: 11px;
   font-family: inherit;
   font-size: 14px;
   font-weight: 600;
@@ -107,28 +157,38 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
+  gap: 5px;
 }
 .tab:hover {
   background: var(--bgSubtle);
   color: var(--textPrimary);
 }
 .tab .tab-num {
-  font-size: 11px;
+  font-family: var(--font-mono);
+  font-size: 10px;
   font-weight: 700;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.16em;
   color: var(--textMuted);
   text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
+.tab .tab-ic {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.tab .tab-ic svg { width: 15px; height: 15px; }
 .tab .tab-label {
   font-size: 14px;
 }
 .tab.active {
-  background: var(--textPrimary);
+  background: var(--accentIndigo);
   color: #fff;
 }
 .tab.active .tab-num {
-  color: rgba(255,255,255,0.6);
+  color: rgba(255,255,255,0.7);
 }
 .tab .dot {
   width: 8px; height: 8px; border-radius: 50%;
@@ -149,19 +209,22 @@ body {
 .card {
   background: var(--bgCard);
   border: 1px solid var(--borderColor);
-  border-radius: 14px;
+  border-radius: 16px;
   padding: 24px;
+  box-shadow: var(--sh-sm);
 }
 .card + .card { margin-top: 16px; }
 .card-label {
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.14em;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.25em;
   text-transform: uppercase;
-  color: var(--textMuted);
+  color: var(--accentIndigo);
   margin-bottom: 12px;
 }
 .card-title {
+  font-family: var(--font-serif);
   font-size: 18px;
   font-weight: 700;
   margin-bottom: 8px;
@@ -181,27 +244,30 @@ body {
   flex-wrap: wrap;
 }
 .day-num {
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.16em;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.25em;
   text-transform: uppercase;
-  color: var(--textMuted);
+  color: var(--accentIndigo);
 }
 .subject-pill {
   padding: 4px 12px;
-  border-radius: 999px;
-  font-size: 11px;
+  border-radius: 9999px;
+  font-family: var(--font-mono);
+  font-size: 10px;
   font-weight: 700;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  background: var(--bgSubtle);
-  border: 1px solid var(--borderColor);
-  color: var(--textSecondary);
+  background: var(--indigo-soft);
+  border: 1px solid var(--indigo-line);
+  color: var(--accentIndigo);
 }
 .day-title {
+  font-family: var(--font-serif);
   font-size: 32px;
-  font-weight: 800;
-  letter-spacing: -0.02em;
+  font-weight: 700;
+  letter-spacing: -0.5px;
   line-height: 1.15;
   margin-bottom: 8px;
 }
@@ -228,11 +294,12 @@ body {
   padding: 16px 18px;
 }
 .goal .goal-label {
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.12em;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.25em;
   text-transform: uppercase;
-  color: var(--textMuted);
+  color: var(--accentIndigo);
   margin-bottom: 6px;
 }
 .goal .goal-text {
@@ -265,16 +332,18 @@ body {
   border-radius: 10px;
 }
 .vocab-icon {
-  width: 32px;
-  height: 32px;
-  border-radius: 8px;
+  width: 34px;
+  height: 34px;
+  border-radius: 9px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 18px;
-  background: #fff;
-  border: 1px solid var(--borderColor);
+  flex-shrink: 0;
+  background: var(--indigo-soft);
+  border: 1px solid var(--indigo-line);
+  color: var(--accentIndigo);
 }
+.vocab-icon svg { width: 18px; height: 18px; }
 .vocab-word {
   font-weight: 600;
   font-size: 15px;
@@ -319,28 +388,35 @@ body {
   width: 56px;
   height: 56px;
   border-radius: 12px;
-  background: #fff;
-  border: 1px solid var(--borderColor);
+  background: var(--indigo-soft);
+  border: 1px solid var(--indigo-line);
+  color: var(--accentIndigo);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 3px;
   font-weight: 700;
 }
 .step-num .step-n {
-  font-size: 11px;
-  letter-spacing: 0.1em;
-  color: var(--textMuted);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  color: var(--accentIndigo);
   text-transform: uppercase;
 }
 .step-num .step-icon {
-  font-size: 22px;
+  display: flex;
   line-height: 1;
 }
+.step-num .step-icon svg { width: 22px; height: 22px; }
 .step-body .step-title {
-  font-size: 15px;
-  font-weight: 700;
-  letter-spacing: 0.04em;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  color: var(--accentIndigo);
   text-transform: uppercase;
   margin-bottom: 4px;
 }
@@ -350,10 +426,11 @@ body {
   line-height: 1.5;
 }
 .step-body .step-time {
-  font-size: 11px;
-  font-weight: 600;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
   color: var(--textMuted);
-  letter-spacing: 0.08em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   margin-top: 6px;
   display: inline-block;
@@ -368,9 +445,10 @@ body {
   margin-top: 14px;
 }
 .frame-box .frame-label {
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.14em;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.25em;
   text-transform: uppercase;
   color: #7a3a00;
   margin-bottom: 6px;
@@ -397,14 +475,15 @@ body {
   padding: 16px;
 }
 .tier .tier-name {
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.14em;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   margin-bottom: 8px;
   display: inline-block;
-  padding: 3px 10px;
-  border-radius: 999px;
+  padding: 3px 11px;
+  border-radius: 9999px;
 }
 .tier.entry .tier-name { background: #fee2e2; color: #991b1b; }
 .tier.emerging .tier-name { background: #fef3c7; color: #92400e; }
@@ -424,9 +503,10 @@ body {
   margin-bottom: 18px;
 }
 .coach-label {
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.16em;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
   color: #3730a3;
   margin-bottom: 8px;
@@ -434,13 +514,11 @@ body {
   align-items: center;
   gap: 8px;
 }
-.coach-label::before {
-  content: "★";
-  font-size: 14px;
-}
+.coach-label svg { width: 14px; height: 14px; }
 .coach-strategy {
+  font-family: var(--font-serif);
   font-size: 22px;
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: -0.01em;
   color: #1e1b4b;
   margin-bottom: 10px;
@@ -452,9 +530,10 @@ body {
   margin-top: 12px;
 }
 .coach-row .row-label {
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.1em;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   color: #4338ca;
   margin-bottom: 4px;
@@ -477,11 +556,12 @@ body {
   font-size: 15px;
 }
 .exit-label {
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.14em;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--textMuted);
+  color: var(--accentIndigo);
   white-space: nowrap;
 }
 .exit-text { color: var(--textPrimary); }
@@ -490,9 +570,10 @@ body {
 .intro {
   background: var(--bgPanel);
   border: 1px solid var(--borderColor);
-  border-radius: 14px;
+  border-radius: 16px;
   padding: 28px 30px;
   margin-bottom: 24px;
+  box-shadow: var(--sh-sm);
 }
 .intro p {
   font-family: var(--font-serif);
@@ -512,18 +593,19 @@ body {
 .day-tile {
   background: var(--bgPanel);
   border: 1px solid var(--borderColor);
-  border-radius: 14px;
+  border-radius: 16px;
   padding: 22px 24px;
   cursor: pointer;
-  transition: all 200ms ease;
+  transition: transform .2s, box-shadow .2s;
   text-align: left;
   font-family: inherit;
   position: relative;
   overflow: hidden;
+  box-shadow: var(--sh-sm);
 }
 .day-tile:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+  transform: translateY(-5px);
+  box-shadow: var(--sh-lg);
 }
 .day-tile .tile-stripe {
   position: absolute;
@@ -537,24 +619,27 @@ body {
   align-items: center;
 }
 .day-tile .tile-num {
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.14em;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--textMuted);
+  color: var(--accentIndigo);
 }
 .day-tile .tile-pill {
   padding: 2px 10px;
-  border-radius: 999px;
+  border-radius: 9999px;
+  font-family: var(--font-mono);
   font-size: 10px;
   font-weight: 700;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   background: var(--bgSubtle);
   border: 1px solid var(--borderColor);
   color: var(--textSecondary);
 }
 .day-tile .tile-title {
+  font-family: var(--font-serif);
   font-size: 20px;
   font-weight: 700;
   letter-spacing: -0.01em;
@@ -573,23 +658,32 @@ body {
   margin-top: 18px;
 }
 .frame-step {
-  background: #fff;
-  border: 1px solid var(--borderColor);
+  background: var(--bgSubtle);
+  border: 1px solid var(--borderSoft);
   border-radius: 12px;
   padding: 16px;
   text-align: center;
 }
 .frame-step .fs-icon {
-  font-size: 28px;
-  margin-bottom: 6px;
-  display: block;
+  margin: 0 auto 8px;
+  width: 40px;
+  height: 40px;
+  border-radius: 11px;
+  background: var(--indigo-soft);
+  border: 1px solid var(--indigo-line);
+  color: var(--accentIndigo);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
+.frame-step .fs-icon svg { width: 22px; height: 22px; }
 .frame-step .fs-name {
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.14em;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--textPrimary);
+  color: var(--accentIndigo);
   margin-bottom: 4px;
 }
 .frame-step .fs-desc {
@@ -607,37 +701,46 @@ body {
 .play {
   background: var(--bgPanel);
   border: 1px solid var(--borderColor);
-  border-radius: 14px;
+  border-radius: 16px;
   padding: 22px 24px;
   display: grid;
   grid-template-columns: 60px 1fr;
   gap: 18px;
   align-items: start;
+  box-shadow: var(--sh-sm);
+  transition: transform .2s, box-shadow .2s;
+}
+.play:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--sh-lg);
 }
 .play-num {
   width: 60px;
   height: 60px;
   border-radius: 14px;
-  background: var(--accentIndigo);
+  background: linear-gradient(150deg, var(--accentIndigoHover), var(--accentIndigo));
   color: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
+  font-family: var(--font-mono);
   font-size: 22px;
-  font-weight: 800;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
 }
 .play-name {
+  font-family: var(--font-serif);
   font-size: 19px;
   font-weight: 700;
   letter-spacing: -0.01em;
   margin-bottom: 6px;
 }
 .play-tag {
-  font-size: 12px;
+  font-size: 12.5px;
   font-weight: 600;
   color: var(--textMuted);
   margin-bottom: 10px;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.02em;
 }
 .play-why {
   font-size: 14.5px;
@@ -662,16 +765,17 @@ body {
 .print-btn {
   background: var(--bgPanel);
   border: 1px solid var(--borderColor);
-  border-radius: 8px;
+  border-radius: 10px;
   padding: 8px 14px;
   font-family: inherit;
   font-size: 13px;
-  font-weight: 500;
-  color: var(--textSecondary);
+  font-weight: 600;
+  color: var(--accentIndigo);
   cursor: pointer;
   margin-left: 8px;
+  transition: background .15s, border-color .15s;
 }
-.print-btn:hover { background: var(--bgSubtle); color: var(--textPrimary); }
+.print-btn:hover { background: var(--indigo-soft); border-color: var(--indigo-line); }
 
 /* ===== Notebook ===== */
 .wb-toolbar {
@@ -685,11 +789,12 @@ body {
 .wb-page {
   background: #fff;
   border: 1px solid var(--borderColor);
-  border-radius: 14px;
+  border-radius: 16px;
   padding: 28px 32px;
   margin-bottom: 18px;
   page-break-after: always;
   break-inside: avoid;
+  box-shadow: var(--sh-sm);
 }
 .wb-page-header {
   display: flex;
@@ -700,24 +805,27 @@ body {
   margin-bottom: 18px;
 }
 .wb-page-header .wb-title {
+  font-family: var(--font-serif);
   font-size: 22px;
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: -0.01em;
 }
 .wb-page-header .wb-meta {
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.12em;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--textMuted);
+  color: var(--accentIndigo);
 }
 .wb-section {
   margin-bottom: 22px;
 }
 .wb-section-label {
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.14em;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--accentIndigo);
   margin-bottom: 8px;
@@ -766,9 +874,10 @@ body {
 }
 .wb-grid th {
   background: var(--bgSubtle);
-  font-size: 11px;
+  font-family: var(--font-mono);
+  font-size: 10px;
   font-weight: 700;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--textSecondary);
 }
@@ -803,26 +912,39 @@ body {
 @media print {
   body { background: #fff; }
   .tabs, .print-hint { display: none !important; }
+  .hero { background: #fff !important; color: var(--textPrimary) !important; margin: 0; padding: 8px 0 16px; }
+  .hero::before { display: none; }
+  .hero .eyebrow { color: var(--accentIndigo) !important; }
+  .hero .subtitle { color: var(--textSecondary) !important; }
+  .hero-badges { display: none !important; }
   .page { display: block !important; page-break-after: always; }
   .shell { max-width: 100%; padding: 16px; }
-  .card, .day-tile, .play, .coach { break-inside: avoid; }
+  .card, .day-tile, .play, .coach { break-inside: avoid; box-shadow: none; }
 }
 </style>
 </head>
 <body>
 <div class="shell">
 
-  <!-- ===== Header ===== -->
-  <div class="header">
-    <div class="eyebrow">Newcomer Bridge · 7th Grade</div>
-    <h1 class="title">Five Days for Newcomers.</h1>
-    <p class="subtitle">A plug-and-play sequence that bridges newcomer English learners into 7th grade California history and science, while quietly modeling five reusable scaffolds for the teacher.</p>
-  </div>
+  <!-- ===== Hero ===== -->
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="eyebrow">Newcomer Bridge · 7th Grade</div>
+      <h1 class="title">Five Days for Newcomers.</h1>
+      <p class="subtitle">A plug-and-play sequence that bridges newcomer English learners into 7th grade California history and science, while quietly modeling five reusable scaffolds for the teacher.</p>
+      <div class="hero-badges">
+        <span>5 lessons</span>
+        <span>50 min each</span>
+        <span>History + Science</span>
+        <span>5 reusable scaffolds</span>
+      </div>
+    </div>
+  </header>
 
   <!-- ===== Tabs ===== -->
   <nav class="tabs" id="tabs">
     <button class="tab active" data-tab="overview">
-      <span class="tab-num">Start</span>
+      <span class="tab-num"><span class="tab-ic" data-ic="compass"></span>Start</span>
       <span class="tab-label">Overview</span>
     </button>
     <button class="tab" data-tab="day1">
@@ -846,11 +968,11 @@ body {
       <span class="tab-label">Synthesis</span>
     </button>
     <button class="tab" data-tab="playbook">
-      <span class="tab-num">★</span>
+      <span class="tab-num"><span class="tab-ic" data-ic="star"></span>Plays</span>
       <span class="tab-label">Playbook</span>
     </button>
     <button class="tab" data-tab="notebook">
-      <span class="tab-num">📓</span>
+      <span class="tab-num"><span class="tab-ic" data-ic="book"></span>Notes</span>
       <span class="tab-label">Notebook</span>
     </button>
   </nav>
@@ -865,6 +987,56 @@ body {
 </div>
 
 <script>
+/* ===== Inline Lucide line-icon library (24x24, currentColor, rounded) ===== */
+const ICONS = {
+  compass: '<circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/>',
+  star: '<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>',
+  book: '<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>',
+  eye: '<path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/>',
+  presentation: '<path d="M2 3h20"/><path d="M21 3v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V3"/><path d="m7 21 5-5 5 5"/>',
+  users: '<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
+  megaphone: '<path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/>',
+  scale: '<path d="M12 3v18"/><path d="M5 7h14"/><path d="m5 7-3 6h6l-3-6z"/><path d="m19 7-3 6h6l-3-6z"/><path d="M7 21h10"/>',
+  brain: '<path d="M12 5a3 3 0 1 0-5.997.142 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z"/><path d="M12 5a3 3 0 1 1 5.997.142 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z"/>',
+  fileText: '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>',
+  penLine: '<path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/>',
+  globe: '<circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>',
+  flag: '<path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/>',
+  map: '<polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/>',
+  waves: '<path d="M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 1.3 0 1.9-.5 2.5-1"/><path d="M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 1.3 0 1.9-.5 2.5-1"/><path d="M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 1.3 0 1.9-.5 2.5-1"/>',
+  home: '<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>',
+  sprout: '<path d="M7 20h10"/><path d="M10 20c5.5-2.5.8-6.4 3-10"/><path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z"/><path d="M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2z"/>',
+  mountain: '<path d="m8 3 4 8 5-5 5 15H2L8 3z"/>',
+  trees: '<path d="M10 10v.2A3 3 0 0 1 8.9 16H5a3 3 0 0 1-1-5.8V10a3 3 0 0 1 6 0Z"/><path d="M7 16v6"/><path d="M13 19v3"/><path d="M12 19h8.3a1 1 0 0 0 .7-1.7L18 14h.3a1 1 0 0 0 .7-1.7L16 9h.2a1 1 0 0 0 .8-1.7L13 3l-1.4 1.5"/>',
+  dog: '<path d="M11.25 16.25h1.5L12 17z"/><path d="M16 14v.5"/><path d="M4.42 11.247A13.152 13.152 0 0 0 4 14.556C4 18.728 7.582 21 12 21s8-2.272 8-6.444a11.702 11.702 0 0 0-.493-3.309"/><path d="M8 14v.5"/><path d="M8.5 8.5c-.384 1.05-1.083 2.028-2.344 2.5-1.931.722-3.576-.297-3.656-1-.113-.994 1.177-6.53 4-7 1.923-.321 3.651.845 3.651 2.235A7.497 7.497 0 0 1 14 5.277c0-1.39 1.844-2.598 3.767-2.277 2.823.47 4.113 6.006 4 7-.08.703-1.725 1.722-3.656 1-1.261-.472-1.855-1.45-2.239-2.5"/>',
+  bird: '<path d="M16 7h.01"/><path d="M3.4 18H12a8 8 0 0 0 8-8V7a4 4 0 0 0-7.28-2.3L2 20"/><path d="m20 7 2 .5-2 .5"/><path d="M10 18v3"/><path d="M14 17.75V21"/><path d="M7 18a6 6 0 0 0 3.84-10.61"/>',
+  hourglass: '<path d="M5 22h14"/><path d="M5 2h14"/><path d="M17 22v-4.172a2 2 0 0 0-.586-1.414L12 12l-4.414 4.414A2 2 0 0 0 7 17.828V22"/><path d="M7 2v4.172a2 2 0 0 0 .586 1.414L12 12l4.414-4.414A2 2 0 0 0 17 6.172V2"/>',
+  calendar: '<rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>',
+  refresh: '<polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>',
+  sparkles: '<path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/>',
+  heart: '<path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>',
+  wind: '<path d="M17.7 7.7a2.5 2.5 0 1 1 1.8 4.3H2"/><path d="M9.6 4.6A2 2 0 1 1 11 8H2"/><path d="M12.6 19.4A2 2 0 1 0 14 16H2"/>',
+  activity: '<polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>',
+  layers: '<polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/>',
+  file: '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>',
+  library: '<path d="m16 6 4 14"/><path d="M12 6v14"/><path d="M8 8v12"/><path d="M4 4v16"/>',
+  handshake: '<path d="m11 17 2 2a1 1 0 1 0 3-3"/><path d="m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4"/><path d="m21 3 1 11h-2"/><path d="M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3"/><path d="M3 4h8"/>'
+};
+function ic(name, size) {
+  const p = ICONS[name] || ICONS.sparkles;
+  const s = size || 24;
+  return '<svg viewBox="0 0 24 24" width="' + s + '" height="' + s + '" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' + p + '</svg>';
+}
+/* map a flow step name to a line icon */
+function flowIcon(name) {
+  const n = name.toLowerCase();
+  if (n.includes('preview')) return 'eye';
+  if (n.includes('show')) return 'presentation';
+  if (n.includes('try')) return 'users';
+  if (n.includes('say')) return 'megaphone';
+  return 'sparkles';
+}
+
 const DAYS = [
   {
     id: 'day1',
@@ -876,11 +1048,11 @@ const DAYS = [
     contentGoal: 'Identify the seven continents and locate your home country on a world map.',
     languageGoal: 'Say "I am from ___. ___ is in ___." in a complete sentence.',
     vocab: [
-      { w: 'world', i: '🌍' },
-      { w: 'country', i: '🚩' },
-      { w: 'continent', i: '🗺️' },
-      { w: 'ocean', i: '🌊' },
-      { w: 'home', i: '🏠' }
+      { w: 'world', i: 'globe' },
+      { w: 'country', i: 'flag' },
+      { w: 'continent', i: 'map' },
+      { w: 'ocean', i: 'waves' },
+      { w: 'home', i: 'home' }
     ],
     materials: [
       'Large world map (poster or projected)',
@@ -889,10 +1061,10 @@ const DAYS = [
       'Photos from students\' home countries (optional but powerful)'
     ],
     flow: [
-      { icon: '👀', name: 'Preview', time: '5 min', desc: 'Show five picture cards on the board: world, country, continent, ocean, home. Say each word three times. Students repeat as a class. Point to the picture, say the word, then point to a student and have them say it back.' },
-      { icon: '🗺️', name: 'Show', time: '5 min', desc: 'Stand at the world map. Point to your own country. Say slowly: "I am from ___. ___ is in ___." Repeat twice with a different sentence rhythm so students can hear the pattern.' },
-      { icon: '🤝', name: 'Try', time: '15 min', desc: 'One at a time, students walk to the map and place a sticky dot on their home country. Class watches and softly choral-says the country name as it is placed.' },
-      { icon: '🗣️', name: 'Say', time: '15 min', desc: 'Students return to seats. Each student finishes the sentence frame on an index card. They read it aloud to a partner. Partner gives a thumbs-up.' }
+      { name: 'Preview', time: '5 min', desc: 'Show five picture cards on the board: world, country, continent, ocean, home. Say each word three times. Students repeat as a class. Point to the picture, say the word, then point to a student and have them say it back.' },
+      { name: 'Show', time: '5 min', desc: 'Stand at the world map. Point to your own country. Say slowly: "I am from ___. ___ is in ___." Repeat twice with a different sentence rhythm so students can hear the pattern.' },
+      { name: 'Try', time: '15 min', desc: 'One at a time, students walk to the map and place a sticky dot on their home country. Class watches and softly choral-says the country name as it is placed.' },
+      { name: 'Say', time: '15 min', desc: 'Students return to seats. Each student finishes the sentence frame on an index card. They read it aloud to a partner. Partner gives a thumbs-up.' }
     ],
     frames: [
       'I am from ____.',
@@ -922,11 +1094,11 @@ const DAYS = [
     contentGoal: 'Sort organisms and objects as living or nonliving (NGSS MS-LS1.A foundation).',
     languageGoal: 'Say "A ___ is living" or "A ___ is not living" with the correct noun.',
     vocab: [
-      { w: 'living', i: '🌱' },
-      { w: 'not living', i: '🪨' },
-      { w: 'plant', i: '🌳' },
-      { w: 'animal', i: '🐶' },
-      { w: 'rock', i: '🪨' }
+      { w: 'living', i: 'sprout' },
+      { w: 'not living', i: 'mountain' },
+      { w: 'plant', i: 'trees' },
+      { w: 'animal', i: 'dog' },
+      { w: 'rock', i: 'mountain' }
     ],
     materials: [
       '15 to 20 picture cards: tree, dog, rock, water, fish, chair, baby, flower, table, bird, sun, mushroom, pencil, frog, river',
@@ -934,10 +1106,10 @@ const DAYS = [
       'Tape (so students can post their card)'
     ],
     flow: [
-      { icon: '👀', name: 'Preview', time: '5 min', desc: 'Hold up each vocabulary card. Say the word. Students respond with a body signal: arms raised for living, arms crossed for not living. Repeat the five words twice.' },
-      { icon: '🧪', name: 'Show', time: '5 min', desc: 'Pick three cards. Demo the sort while narrating: "A tree is living. A tree grows." Place it in the LIVING bin. "A rock is not living. A rock does not grow." Place it in NOT LIVING.' },
-      { icon: '🤝', name: 'Try', time: '15 min', desc: 'Students take turns. Pull a card, walk to a bin, and place it. The class chorally says the sentence: "A ___ is living." Move fast. Cheer mistakes; resort together.' },
-      { icon: '🗣️', name: 'Say', time: '10 min', desc: 'Pairs draw two cards each from a small pile. Each partner reads both sentences aloud using the frame. Then trade pairs and do it again with new cards.' }
+      { name: 'Preview', time: '5 min', desc: 'Hold up each vocabulary card. Say the word. Students respond with a body signal: arms raised for living, arms crossed for not living. Repeat the five words twice.' },
+      { name: 'Show', time: '5 min', desc: 'Pick three cards. Demo the sort while narrating: "A tree is living. A tree grows." Place it in the LIVING bin. "A rock is not living. A rock does not grow." Place it in NOT LIVING.' },
+      { name: 'Try', time: '15 min', desc: 'Students take turns. Pull a card, walk to a bin, and place it. The class chorally says the sentence: "A ___ is living." Move fast. Cheer mistakes; resort together.' },
+      { name: 'Say', time: '10 min', desc: 'Pairs draw two cards each from a small pile. Each partner reads both sentences aloud using the frame. Then trade pairs and do it again with new cards.' }
     ],
     frames: [
       'A ____ is living.',
@@ -967,11 +1139,11 @@ const DAYS = [
     contentGoal: 'Identify changes in tools, work, and daily life from long ago to today.',
     languageGoal: 'Say "Long ago, people ___. Today, we ___." using past and present.',
     vocab: [
-      { w: 'long ago', i: '⏳' },
-      { w: 'today', i: '📆' },
-      { w: 'change', i: '🔄' },
-      { w: 'people', i: '👥' },
-      { w: 'life', i: '✨' }
+      { w: 'long ago', i: 'hourglass' },
+      { w: 'today', i: 'calendar' },
+      { w: 'change', i: 'refresh' },
+      { w: 'people', i: 'users' },
+      { w: 'life', i: 'sparkles' }
     ],
     materials: [
       'Six paired image cards: candle/light bulb, horse/car, scroll/laptop, wooden plow/tractor, well/faucet, letter/text message',
@@ -979,10 +1151,10 @@ const DAYS = [
       'Sentence frame strips, taped above the T-chart'
     ],
     flow: [
-      { icon: '👀', name: 'Preview', time: '5 min', desc: 'Show the five vocabulary cards. Read each one. Students repeat. Then act out "long ago" by stroking an imaginary beard, and "today" by tapping a wristwatch. Use the gestures whenever you say the words.' },
-      { icon: '⚖️', name: 'Show', time: '8 min', desc: 'Place the candle/light-bulb pair on the T-chart. Read the frame slowly: "Long ago, people used a candle. Today, we use a light bulb." Repeat with a second pair. Pause and let students predict where the next image goes.' },
-      { icon: '🤝', name: 'Try', time: '17 min', desc: 'In pairs, students sort the remaining four pairs onto the T-chart. They whisper-read the frame to each other before placing each card.' },
-      { icon: '🗣️', name: 'Say', time: '10 min', desc: 'Each pair shares one comparison aloud to the class. The class repeats it back chorally.' }
+      { name: 'Preview', time: '5 min', desc: 'Show the five vocabulary cards. Read each one. Students repeat. Then act out "long ago" by stroking an imaginary beard, and "today" by tapping a wristwatch. Use the gestures whenever you say the words.' },
+      { name: 'Show', time: '8 min', desc: 'Place the candle/light-bulb pair on the T-chart. Read the frame slowly: "Long ago, people used a candle. Today, we use a light bulb." Repeat with a second pair. Pause and let students predict where the next image goes.' },
+      { name: 'Try', time: '17 min', desc: 'In pairs, students sort the remaining four pairs onto the T-chart. They whisper-read the frame to each other before placing each card.' },
+      { name: 'Say', time: '10 min', desc: 'Each pair shares one comparison aloud to the class. The class repeats it back chorally.' }
     ],
     frames: [
       'Long ago, people ____.',
@@ -1012,11 +1184,11 @@ const DAYS = [
     contentGoal: 'Identify the heart, lungs, and brain on a body diagram and describe what each one does (NGSS MS-LS1.A).',
     languageGoal: 'Say "My ___ helps me ___." using a body part and an action verb.',
     vocab: [
-      { w: 'heart', i: '❤️' },
-      { w: 'lungs', i: '🫁' },
-      { w: 'brain', i: '🧠' },
-      { w: 'breathe', i: '💨' },
-      { w: 'beat', i: '💓' }
+      { w: 'heart', i: 'heart' },
+      { w: 'lungs', i: 'wind' },
+      { w: 'brain', i: 'brain' },
+      { w: 'breathe', i: 'wind' },
+      { w: 'beat', i: 'activity' }
     ],
     materials: [
       'Body outline diagram, one per student',
@@ -1024,10 +1196,10 @@ const DAYS = [
       'Pencils or thin markers'
     ],
     flow: [
-      { icon: '👀', name: 'Preview', time: '7 min', desc: 'Say "heart" and place a hand on your chest. Students copy. Say "lungs" and take a deep breath in and out. Students copy. Say "brain" and tap your head. Students copy. Repeat the cycle three times, faster each time.' },
-      { icon: '🧠', name: 'Show', time: '5 min', desc: 'Stand at the board. Label HEART, LUNGS, BRAIN on a body outline. As you label each, narrate: "My heart beats. My lungs breathe. My brain thinks."' },
-      { icon: '🤝', name: 'Try', time: '15 min', desc: 'Students label their own body diagrams. After each label, they stand up and act out the body part: hand on chest for heart, deep breath for lungs, thinking pose for brain.' },
-      { icon: '🗣️', name: 'Say', time: '8 min', desc: 'Around the room, each student says one frame aloud while doing the action. The class echoes it with the same gesture.' }
+      { name: 'Preview', time: '7 min', desc: 'Say "heart" and place a hand on your chest. Students copy. Say "lungs" and take a deep breath in and out. Students copy. Say "brain" and tap your head. Students copy. Repeat the cycle three times, faster each time.' },
+      { name: 'Show', time: '5 min', desc: 'Stand at the board. Label HEART, LUNGS, BRAIN on a body outline. As you label each, narrate: "My heart beats. My lungs breathe. My brain thinks."' },
+      { name: 'Try', time: '15 min', desc: 'Students label their own body diagrams. After each label, they stand up and act out the body part: hand on chest for heart, deep breath for lungs, thinking pose for brain.' },
+      { name: 'Say', time: '8 min', desc: 'Around the room, each student says one frame aloud while doing the action. The class echoes it with the same gesture.' }
     ],
     frames: [
       'My ____ helps me ____.',
@@ -1057,11 +1229,11 @@ const DAYS = [
     contentGoal: 'Connect change over time (history) with how the body works (science) in a short multi-modal product.',
     languageGoal: 'Use both sentence frames from Days 3 and 4 in one short paragraph or labeled poster.',
     vocab: [
-      { w: 'all 20 words', i: '📚' },
-      { w: 'from Days 1 to 4', i: '🔁' },
-      { w: 'word wall', i: '🧱' },
-      { w: 'poster', i: '📄' },
-      { w: 'share', i: '🫱🏽‍🫲🏽' }
+      { w: 'all 20 words', i: 'library' },
+      { w: 'from Days 1 to 4', i: 'refresh' },
+      { w: 'word wall', i: 'layers' },
+      { w: 'poster', i: 'file' },
+      { w: 'share', i: 'handshake' }
     ],
     materials: [
       'Large paper, one per student',
@@ -1070,10 +1242,10 @@ const DAYS = [
       'Sentence frame strips on every table'
     ],
     flow: [
-      { icon: '👀', name: 'Preview', time: '5 min', desc: 'Word wall review. Point to each word from Days 1 to 4. Students choral-name. Move fast. Praise the volume of the room.' },
-      { icon: '📄', name: 'I do · Show', time: '7 min', desc: 'Show your finished sample poster. Read it aloud while pointing: "Long ago, people did not know about the heart. Today, doctors know how the heart beats." Walk through how you used the word bank to find each word.' },
-      { icon: '✍️', name: 'We do · Try', time: '10 min', desc: 'Co-create a second poster on chart paper as a class. You write; students contribute words from the bank. Choose one body part and one tool from long ago.' },
-      { icon: '🗣️', name: 'You do · Say', time: '18 min', desc: 'Students make their own poster using the frame strips and the word bank. They share with one partner, then one new partner, before turning it in.' }
+      { name: 'Preview', time: '5 min', desc: 'Word wall review. Point to each word from Days 1 to 4. Students choral-name. Move fast. Praise the volume of the room.' },
+      { name: 'I do · Show', time: '7 min', desc: 'Show your finished sample poster. Read it aloud while pointing: "Long ago, people did not know about the heart. Today, doctors know how the heart beats." Walk through how you used the word bank to find each word.' },
+      { name: 'We do · Try', time: '10 min', desc: 'Co-create a second poster on chart paper as a class. You write; students contribute words from the bank. Choose one body part and one tool from long ago.' },
+      { name: 'You do · Say', time: '18 min', desc: 'Students make their own poster using the frame strips and the word bank. They share with one partner, then one new partner, before turning it in.' }
     ],
     frames: [
       'Long ago, people did not know about ____.',
@@ -1121,10 +1293,10 @@ function renderOverview() {
       <div class="card">
         <div class="card-label">The lesson frame · same every day</div>
         <div class="frame-row">
-          <div class="frame-step"><span class="fs-icon">👀</span><div class="fs-name">Preview</div><div class="fs-desc">Picture the words.</div></div>
-          <div class="frame-step"><span class="fs-icon">🗺️</span><div class="fs-name">Show</div><div class="fs-desc">See the model.</div></div>
-          <div class="frame-step"><span class="fs-icon">🤝</span><div class="fs-name">Try</div><div class="fs-desc">Do it together.</div></div>
-          <div class="frame-step"><span class="fs-icon">🗣️</span><div class="fs-name">Say</div><div class="fs-desc">Use the frame.</div></div>
+          <div class="frame-step"><span class="fs-icon">${ic('eye', 22)}</span><div class="fs-name">Preview</div><div class="fs-desc">Picture the words.</div></div>
+          <div class="frame-step"><span class="fs-icon">${ic('presentation', 22)}</span><div class="fs-name">Show</div><div class="fs-desc">See the model.</div></div>
+          <div class="frame-step"><span class="fs-icon">${ic('users', 22)}</span><div class="fs-name">Try</div><div class="fs-desc">Do it together.</div></div>
+          <div class="frame-step"><span class="fs-icon">${ic('megaphone', 22)}</span><div class="fs-name">Say</div><div class="fs-desc">Use the frame.</div></div>
         </div>
       </div>
 
@@ -1187,7 +1359,7 @@ function renderDay(d) {
             <div class="vocab-list">
               ${d.vocab.map(v => `
                 <div class="vocab-item">
-                  <div class="vocab-icon">${v.i}</div>
+                  <div class="vocab-icon">${ic(v.i, 18)}</div>
                   <div class="vocab-word">${escapeHtml(v.w)}</div>
                 </div>
               `).join('')}
@@ -1208,7 +1380,7 @@ function renderDay(d) {
               ${d.flow.map((s, i) => `
                 <div class="step">
                   <div class="step-num">
-                    <div class="step-icon">${s.icon}</div>
+                    <div class="step-icon">${ic(flowIcon(s.name), 22)}</div>
                     <div class="step-n">${i+1}</div>
                   </div>
                   <div class="step-body">
@@ -1246,7 +1418,7 @@ function renderDay(d) {
       </div>
 
       <div class="coach">
-        <div class="coach-label">Teacher Move · the scaffold you are practicing today</div>
+        <div class="coach-label">${ic('star', 14)}Teacher Move · the scaffold you are practicing today</div>
         <div class="coach-strategy">${escapeHtml(d.strategy.name)}</div>
         <div style="font-size: 14px; color: #4338ca; font-style: italic;">${escapeHtml(d.strategy.tag)}</div>
         <div class="coach-row">
@@ -1482,6 +1654,11 @@ function activate(tab) {
 }
 
 tabs.forEach(t => t.addEventListener('click', () => activate(t.dataset.tab)));
+
+// Hydrate tab icons
+document.querySelectorAll('.tab-ic[data-ic]').forEach(el => {
+  el.innerHTML = ic(el.getAttribute('data-ic'), 15);
+});
 
 // Initial render
 render('overview');
